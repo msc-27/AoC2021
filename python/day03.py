@@ -8,10 +8,10 @@ print(e*g)
 def find_one(cond):
     lst = lines; pos = 0
     while len(lst) > 1:
-        lst = filter(lst, cond, pos)
+        lst = prune(lst, cond, pos)
         pos += 1
     return int(lst[0],2)
-def filter(lst, cond, pos):
+def prune(lst, cond, pos):
     bits = [x[pos] for x in lst]
     m = max(['1','0'], key = lambda x: bits.count(x))
     return [x for x in lst if (x[pos] == m) == cond]
