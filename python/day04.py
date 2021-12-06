@@ -8,7 +8,7 @@ scores = []
 def eliminate(boards): return [b for b in boards if not completed(b)]
 def completed(board):
     for row in board:
-        if all(row[x] in drawn for x in range(5)):
+        if all(row[col] in drawn for col in range(5)):
             evaluate(board)
             return True
     for col in range(5):
