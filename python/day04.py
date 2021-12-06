@@ -12,7 +12,7 @@ def completed(board):
             evaluate(board)
             return True
     for col in range(5):
-        if all(board[x][col] in drawn for x in range(5)):
+        if all(row[col] in drawn for row in board):
             evaluate(board)
             return True
     return False
