@@ -15,12 +15,12 @@ def line_points(p1,p2,allow_diagonal=True):
         dy = 1 if y2>y1 else -1
         for x,y in zip(range(x1,x2+dx,dx),range(y1,y2+dy,dy)): yield (x,y)
 
-visited = defaultdict(lambda:0)
+visited = defaultdict(int)
 for x1,y1,x2,y2 in segments:
         for p in line_points((x1,y1),(x2,y2),False): visited[p] += 1
 print(sum(1 for x in visited if visited[x] > 1))
 
-visited = defaultdict(lambda:0)
+visited = defaultdict(int)
 for x1,y1,x2,y2 in segments:
         for p in line_points((x1,y1),(x2,y2)): visited[p] += 1
 print(sum(1 for x in visited if visited[x] > 1))
