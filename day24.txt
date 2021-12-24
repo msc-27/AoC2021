@@ -1,0 +1,303 @@
+# Annotated input file with mental calculations
+# Whenever an eql x w is possibly true, assume it is true
+# This keeps z down to a minimum number of 26x factors
+inp w		w = d1
+mul x 0
+add x z
+mod x 26
+div z 1
+add x 10	x = 10
+eql x w		FALSE
+eql x 0		x = 1
+mul y 0
+add y 25
+mul y x
+add y 1		y = 26
+mul z y
+mul y 0
+add y w
+add y 2
+mul y x		y = d1 + 2
+add z y		z = d1 + 2
+inp w		w = d2
+mul x 0
+add x z
+mod x 26	x = d1 + 2
+div z 1
+add x 15	x = d1 + 17
+eql x w		FALSE
+eql x 0		x = 1
+mul y 0
+add y 25
+mul y x
+add y 1		y = 26
+mul z y		z = 26(d1 + 2)
+mul y 0
+add y w
+add y 16
+mul y x		y = d2 + 16
+add z y		z = 26(d1 + 2) + d2 + 16
+inp w		w = d3
+mul x 0
+add x z
+mod x 26	x = d2 + 16
+div z 1
+add x 14	x = d2 + 30
+eql x w		FALSE
+eql x 0		x = 1
+mul y 0
+add y 25
+mul y x
+add y 1		y = 26
+mul z y		z = 26(26(d1 + 2) + d2 + 16)
+mul y 0
+add y w
+add y 9
+mul y x		y = d3 + 9
+add z y		z = 26(26(d1 + 2) + d2 + 16) + d3 + 9
+inp w		w = d4
+mul x 0
+add x z
+mod x 26	x = d3 + 9
+div z 1
+add x 15	x = d3 + 24
+eql x w		FALSE
+eql x 0		x = 1
+mul y 0
+add y 25
+mul y x
+add y 1		y = 26
+mul z y		z = 26(26(26(d1 + 2) + d2 + 16) + d3 + 9)
+mul y 0
+add y w
+add y 0
+mul y x		y = d4
+add z y		z = 26(26(26(d1 + 2) + d2 + 16) + d3 + 9) + d4
+inp w		w = d5
+mul x 0
+add x z
+mod x 26	x = d4
+div z 26	z = 26(26(d1 + 2) + d2 + 16) + d3 + 9
+add x -8	x = d4 - 8
+# d5 = d4 - 8
+eql x w		TRUE
+eql x 0		x = 0
+mul y 0
+add y 25
+mul y x
+add y 1		y = 1
+mul z y
+mul y 0
+add y w
+add y 1
+mul y x
+add z y
+inp w		w = d6
+mul x 0
+add x z
+mod x 26	x = d3 + 9
+div z 1
+add x 10	x = d3 + 19
+eql x w		FALSE
+eql x 0		x = 1
+mul y 0
+add y 25
+mul y x
+add y 1		y = 26
+mul z y		z = 26(26(26(d1 + 2) + d2 + 16) + d3 + 9)
+mul y 0
+add y w
+add y 12
+mul y x		y = d6 + 12
+add z y		z = 26(26(26(d1 + 2) + d2 + 16) + d3 + 9) + d6 + 12
+inp w		w = d7
+mul x 0
+add x z
+mod x 26	x = d6 + 12
+div z 26	z = 26(26(d1 + 2) + d2 + 16) + d3 + 9
+add x -16	x = d6 - 4
+# d7 = d6 - 4
+eql x w		TRUE
+eql x 0		x = 0
+mul y 0
+add y 25
+mul y x
+add y 1		y = 1
+mul z y
+mul y 0
+add y w
+add y 6
+mul y x
+add z y
+inp w		w = d8
+mul x 0
+add x z
+mod x 26	x = d3 + 9
+div z 26	z = 26(d1 + 2) + d2 + 16
+add x -4	x = d3 + 5
+# d8 = d3 + 5
+eql x w		TRUE
+eql x 0		x = 0
+mul y 0
+add y 25
+mul y x
+add y 1
+mul z y
+mul y 0
+add y w
+add y 6
+mul y x
+add z y
+inp w		w = d9
+mul x 0
+add x z
+mod x 26	x = d2 + 16
+div z 1
+add x 11	x = d2 + 27
+eql x w		FALSE
+eql x 0		x = 1
+mul y 0
+add y 25
+mul y x
+add y 1		y = 26
+mul z y		z = 26(26(d1 + 2) + d2 + 16)
+mul y 0
+add y w
+add y 3
+mul y x		y = d9 + 3
+add z y		z = 26(26(d1 + 2) + d2 + 16) + d9 + 3
+inp w		w = d10
+mul x 0
+add x z
+mod x 26	x = d9 + 3
+div z 26	z = 26(d1 + 2) + d2 + 16
+add x -3	x = d9
+# d10 = d9
+eql x w		TRUE
+eql x 0		x = 0
+mul y 0
+add y 25
+mul y x
+add y 1
+mul z y
+mul y 0
+add y w
+add y 5
+mul y x
+add z y
+inp w		w = d11
+mul x 0
+add x z
+mod x 26	x = d2 + 16
+div z 1
+add x 12	x = d2 + 28
+eql x w		FALSE
+eql x 0		x = 1
+mul y 0
+add y 25
+mul y x
+add y 1		y = 26
+mul z y		z = 26(26(d1 + 2) + d2 + 16)
+mul y 0
+add y w
+add y 9
+mul y x		y = d11 + 9
+add z y		z = 26(26(d1 + 2) + d2 + 16) + d11 + 9
+inp w		w = d12
+mul x 0
+add x z
+mod x 26	x = d11 + 9
+div z 26	z = 26(d1 + 2) + d2 + 16
+add x -7	x = d11 + 2
+# d12 = d11 + 2
+eql x w		TRUE
+eql x 0		x = 0
+mul y 0
+add y 25
+mul y x
+add y 1
+mul z y
+mul y 0
+add y w
+add y 3
+mul y x
+add z y
+inp w		w = d13
+mul x 0
+add x z
+mod x 26	x = d2 + 16
+div z 26	z = d1 + 2
+add x -15	x = d2 + 1
+# d13 = d2 + 1
+eql x w		TRUE
+eql x 0		x = 0
+mul y 0
+add y 25
+mul y x
+add y 1
+mul z y
+mul y 0
+add y w
+add y 2
+mul y x
+add z y
+inp w		w = d14
+mul x 0
+add x z
+mod x 26	x = d1 + 2
+div z 26	z = 0
+add x -7	x = d1 - 5
+# d14 = d1 - 5
+eql x w		TRUE
+eql x 0		x = 0
+mul y 0
+add y 25
+mul y x
+add y 1
+mul z y
+mul y 0
+add y w
+add y 3
+mul y x
+add z y
+
+Summary of conditions:
+d5 = d4 - 8
+d7 = d6 - 4
+d8 = d3 + 5
+d10 = d9
+d12 = d11 + 2
+d13 = d2 + 1
+d14 = d1 - 5
+
+Max:
+d1 = 9
+d2 = 8
+d3 = 4
+d4 = 9
+d5 = 1
+d6 = 9
+d7 = 5
+d8 = 9
+d9 = 9
+d10 = 9
+d11 = 7
+d12 = 9
+d13 = 9
+d14 = 4
+
+Min:
+d1 = 6
+d2 = 1
+d3 = 1
+d4 = 9
+d5 = 1
+d6 = 5
+d7 = 1
+d8 = 6
+d9 = 1
+d10 = 1
+d11 = 1
+d12 = 3
+d13 = 2
+d14 = 1
