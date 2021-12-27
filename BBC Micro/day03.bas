@@ -7,7 +7,7 @@ n=0: len=0
 REPEAT
 PRINT n+1;:INPUT "> " line$
 IF line$ <> "" PROCstore
-UNTIL line$ = "" OR (exec AND EOF#exec)
+UNTIL FNend_input
 IF n=0 END
 gam=0: eps=0
 FOR I% = 1 TO len
@@ -28,6 +28,7 @@ vpos=VPOS: PROCtextwnd(FALSE)
 PRINT TAB(0,3);CHR$(130);"Life support rating = ";oxy * co2
 PROCtextwnd(TRUE): PRINT TAB(0,vpos);
 END
+DEF FNend_input: IF exec THEN =EOF#exec ELSE =(line$ = "")
 DEF PROCstore
 V%=0
 n=n+1

@@ -7,13 +7,13 @@ DIM cave% 102*102-1
 DIM set1% 200: DIM set2% 200: REM fringe sets for BFS
 INPUT "Visual solution? (Y/N) >" vis$
 IF ASC(vis$) = ASC("Y") OR ASC(vis$) = ASC("y") V% = TRUE
-INPUT "Name of input file >" name$
-IF name$<>"" PROCexec(name$)
+INPUT "Name of input file >" file$
+IF file$ <> "" THEN exec = FNexec(file$) ELSE exec = 0
 N%=0
 REPEAT
 PRINT N%+1;: INPUT "> " line$
 IF line$ <> "" PROCstore
-UNTIL line$ = ""
+UNTIL FNend_input
 height% = N%
 FOR I%=1 TO width%: cave%?I% = 9: NEXT
 FOR I%=(height%+1)*(width%+2)+1 TO (height%+2)*(width%+2)-2: cave%?I% = 9: NEXT
@@ -23,6 +23,7 @@ FOR O% = width%+3 TO (height%+1)*(width%+2)-2
 IF cave%?O% <> 9 PROCtest
 NEXT
 END
+DEF FNend_input: IF exec THEN =EOF#exec ELSE =(line$ = "")
 DEF PROCstore
 N%=N%+1
 width% = LEN(line$)
@@ -40,7 +41,7 @@ IF cave%?(O%-width%-2) <= h ENDPROC
 IF cave%?(O%+width%+2) <= h ENDPROC
 Y%=O% DIV (width%+2) - 1: X%=O% MOD (width%+2) - 1
 PRINT "(";X%;",";Y%;") "; cave%?O% + 1; " size ";
-IF V% PLOT 69, X%*8, (height%-1-Y%)*8: PLOT 69, X%*8, (height%-1-Y%)*8+4
+IF V% PLOT 69, X%*8, (height%-1-Y%)*8: PLOT 65,0,4
 risk% = risk% + cave%?O% + 1
 LOCAL count%, n_fringe%, fringe%, newset%, cell%
 count%=0: n_fringe%=1: fringe% = set1%: newset% = set2%
@@ -49,10 +50,10 @@ REPEAT
 count% = count% + n_fringe%: N%=0
 FOR cell% = 0 TO (n_fringe%-1)*2 STEP 2
 P% = fringe%!cell% AND &FFFF
-IF cave%?(P%-1) < 9 THEN PROCexpand(newset%,P%-1,10): N%=N%+1
-IF cave%?(P%+1) < 9 THEN PROCexpand(newset%,P%+1,10): N%=N%+1
-IF cave%?(P%-width%-2) < 9 THEN PROCexpand(newset%,P%-width%-2,10): N%=N%+1
-IF cave%?(P%+width%+2) < 9 THEN PROCexpand(newset%,P%+width%+2,10): N%=N%+1
+IF cave%?(P%-1) < 9 PROCexpand(newset%,P%-1,10)
+IF cave%?(P%+1) < 9 PROCexpand(newset%,P%+1,10)
+IF cave%?(P%-width%-2) < 9 PROCexpand(newset%,P%-width%-2,10)
+IF cave%?(P%+width%+2) < 9 PROCexpand(newset%,P%+width%+2,10)
 NEXT
 n_fringe% = N%: T% = fringe%: fringe% = newset%: newset% = T%
 UNTIL n_fringe% = 0
@@ -61,11 +62,11 @@ PROCreport_risk
 IF count% > basin_size%(2) PROCbasin(count%)
 ENDPROC
 DEF PROCexpand(set%,off%,new%)
-cave%?off% = new%: set%!(N%*2) = off%
+cave%?off% = new%: set%!(N%*2) = off%: N%=N%+1
 IF NOT V% ENDPROC
 X% = ((off% MOD (width%+2)) - 1) * 8
 Y% = (height% - off% DIV (width%+2)) * 8
-PLOT 71,X%,Y%: PLOT 71,X%,Y%+4
+PLOT 71,X%,Y%: PLOT 67,0,4
 ENDPROC
 DEF PROCbasin(count%)
 PROCinsert(2, count%)
@@ -89,10 +90,10 @@ REPEAT
 count% = count% + n_fringe%: N%=0
 FOR cell% = 0 TO (n_fringe%-1)*2 STEP 2
 P% = fringe%!cell% AND &FFFF
-IF cave%?(P%-1) = old% THEN PROCexpand(newset%,P%-1,new%): N%=N%+1
-IF cave%?(P%+1) = old% THEN PROCexpand(newset%,P%+1,new%): N%=N%+1
-IF cave%?(P%-width%-2) = old% THEN PROCexpand(newset%,P%-width%-2,new%): N%=N%+1
-IF cave%?(P%+width%+2) = old% THEN PROCexpand(newset%,P%+width%+2,new%): N%=N%+1
+IF cave%?(P%-1) = old% PROCexpand(newset%,P%-1,new%)
+IF cave%?(P%+1) = old% PROCexpand(newset%,P%+1,new%)
+IF cave%?(P%-width%-2) = old% PROCexpand(newset%,P%-width%-2,new%)
+IF cave%?(P%+width%+2) = old% PROCexpand(newset%,P%+width%+2,new%)
 NEXT
 n_fringe% = N%: T% = fringe%: fringe% = newset%: newset% = T%
 UNTIL n_fringe% = 0
@@ -126,13 +127,13 @@ VDU 29, 0; 96;
 GCOL 0,129: CLG: GCOL 0,128
 ENDPROC
 DEF PROCtextwnd(flag)
-VDU 28,0
-IF V% VDU 31,19 ELSE VDU 24,39
+VDU 28,0: IF V% VDU 31,19 ELSE VDU 24,39
 IF NOT flag VDU 0: ENDPROC
 IF V% VDU 29 ELSE VDU 6
 ENDPROC
-DEF PROCexec(file$)
+DEF FNexec(file$)
 LOCAL cmd$,cmd%: cmd$ = "EXEC "+file$
 DIM cmd% LEN(cmd$): $cmd% = cmd$
 X% = cmd% MOD &100: Y% = cmd% DIV &100: CALL &FFF7
+Y%=&FF: X%=0: A%=&C6: =(USR(&FFF4) AND &FF00) DIV &100
 ENDPROC
