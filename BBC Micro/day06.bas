@@ -29,7 +29,7 @@ CALL print_u64, ?sum
 ENDPROC
 DEF PROCstatus
 PRINT "After ";SPC(3-LEN(STR$(iter)));iter;" days: ";
-PROCprint_sum:PRINT " fish"
+PROCprint_sum: PRINT " fish"
 ENDPROC
 DEF PROCreport(part,days)
 LOCAL vpos: vpos=VPOS: PROCtextwnd(FALSE)
@@ -37,18 +37,16 @@ PRINT TAB(0,1+part);"Population after ";days;" days: ";:PROCprint_sum
 PROCtextwnd(TRUE): PRINT TAB(0,vpos);
 ENDPROC
 DEF PROCbanner
+FOR I%=1 TO 2
 VDU 141,132,157,131: PRINT "2021/06      Lanternfish"
-VDU 141,132,157,131: PRINT "2021/06      Lanternfish"
-PROCtextwnd(TRUE)
+NEXT: PROCtextwnd(TRUE)
 ENDPROC
 DEF PROCtextwnd(flag)
 VDU 28,0,24,39: IF flag VDU 5 ELSE VDU 0
 ENDPROC
 DEF PROCasm_add64
 dst=&80: src=&82: DIM code 35
-FOR I% = 0 TO 2 STEP 2
-P% = code
-[OPT I%
+FOR I%=0 TO 2 STEP 2: P%=code: [ OPT I%
 .add64
 LDA &601:STA dst:LDA &602:STA dst+1
 LDA &604:STA src:LDA &605:STA src+1
@@ -59,9 +57,7 @@ ENDPROC
 DEF PROCasm_print_u64
 DIM code 258
 ptr=&80:lkptr=&82:val=&70:ldz=&7D:dgt=&7E:ctr=&7F
-FOR I% = 0 TO 2 STEP 2
-P%=code
-[ OPT I%
+FOR I%=0 TO 2 STEP 2: P%=code: [ OPT I%
 .lkup
 EQUD &89E80000:EQUD &8AC72304:EQUD &A7640000:EQUD &DE0B6B3
 EQUD &5D8A0000:EQUD &1634578:EQUD &6FC10000:EQUD &2386F2

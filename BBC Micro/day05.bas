@@ -199,7 +199,7 @@ REM If already flagged, "overflag" it and subtract one from the count.
 REM Such points will be revisited and counted later.
 DEF PROCmark(pos%)
 IF xect?pos% < flag% THEN xect?pos% = flag%: C%=C%+1: ENDPROC
-IF xect?pos% = flag% THEN xect?pos% = flag%+1: C%=C%-1: ENDPROC
+IF xect?pos% = flag% THEN xect?pos% = flag%+1: C%=C%-1
 ENDPROC
 DEF PROCreport(part%)
 total%(part%) = total%(part%) + C%
@@ -229,8 +229,8 @@ I% = index% * 12
 tab!I% = a%: tab!(I%+4) = b%: tab!(I%+8) = c%
 ENDPROC
 DEF PROCbanner
-VDU 134,157,132,141: PRINT "2021/05   Hydrothermal Venture"
-VDU 134,157,132,141: PRINT "2021/05   Hydrothermal Venture"
+FOR I%=1 TO 2
+VDU 134,157,132,141: PRINT "2021/05   Hydrothermal Venture": NEXT
 VDU 130: PRINT "Part 1:"
 VDU 130: PRINT "Part 2:"
 PROCtextwnd(TRUE)
@@ -240,7 +240,6 @@ LOCAL cmd$,cmd%: cmd$ = "EXEC "+file$
 DIM cmd% LEN(cmd$): $cmd% = cmd$
 X% = cmd% MOD &100: Y% = cmd% DIV &100: CALL &FFF7
 Y%=&FF: X%=0: A%=&C6: =(USR(&FFF4) AND &FF00) DIV &100
-ENDPROC
 DEF PROCtextwnd(flag)
 VDU 28,0,24,39: IF flag VDU 5 ELSE VDU 0
 ENDPROC

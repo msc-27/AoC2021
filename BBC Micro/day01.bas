@@ -19,16 +19,15 @@ PRINT TAB(0,3);"Part 2: ";count2
 PROCtextwnd(TRUE): PRINT TAB(0,vpos%);
 ENDPROC
 DEF PROCbanner
+FOR I%=1 TO 2
 VDU 135,157,129,141: PRINT "2021/01       Sonar Sweep"
-VDU 135,157,129,141: PRINT "2021/01       Sonar Sweep"
-PROCtextwnd(TRUE)
+NEXT: PROCtextwnd(TRUE)
 ENDPROC
 DEF FNexec(file$)
 LOCAL cmd$,cmd%: cmd$ = "EXEC "+file$
 DIM cmd% LEN(cmd$): $cmd% = cmd$
 X% = cmd% MOD &100: Y% = cmd% DIV &100: CALL &FFF7
 Y%=&FF: X%=0: A%=&C6: =(USR(&FFF4) AND &FF00) DIV &100
-ENDPROC
 DEF PROCtextwnd(flag)
 VDU 28,0,24,39: IF flag VDU 5 ELSE VDU 0
 ENDPROC

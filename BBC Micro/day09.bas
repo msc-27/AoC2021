@@ -1,6 +1,5 @@
-V% = FALSE
-MODE 7
-PROCbanner
+V%=FALSE
+MODE 7: PROCbanner
 DIM basin_size%(3), basin_off%(3)
 FOR I%=0 TO 2: basin_size%(I%) = 1: basin_off%(I%) = 0: NEXT
 DIM cave% 102*102-1
@@ -26,19 +25,17 @@ END
 DEF FNend_input: IF exec THEN =EOF#exec ELSE =(line$ = "")
 DEF PROCstore
 N%=N%+1
-width% = LEN(line$)
-O% = N% * (width%+2)
+width% = LEN(line$): O% = N% * (width%+2)
 cave%?O% = 9
 FOR I%=1 TO width%: cave%?(O%+I%) = VAL(MID$(line$,I%,1)): NEXT
 cave%?(O%+width%+1) = 9
 ENDPROC
 DEF PROCtest
-LOCAL h
-h = cave%?O%
-IF cave%?(O%-1) <= h ENDPROC
-IF cave%?(O%+1) <= h ENDPROC
-IF cave%?(O%-width%-2) <= h ENDPROC
-IF cave%?(O%+width%+2) <= h ENDPROC
+LOCAL h%: h% = cave%?O%
+IF cave%?(O%-1) <= h% ENDPROC
+IF cave%?(O%+1) <= h% ENDPROC
+IF cave%?(O%-width%-2) <= h% ENDPROC
+IF cave%?(O%+width%+2) <= h% ENDPROC
 Y%=O% DIV (width%+2) - 1: X%=O% MOD (width%+2) - 1
 PRINT "(";X%;",";Y%;") "; cave%?O% + 1; " size ";
 IF V% PLOT 69, X%*8, (height%-1-Y%)*8: PLOT 65,0,4
@@ -107,23 +104,22 @@ PRINT "= "; basin_size%(0) * basin_size%(1) * basin_size%(2)
 PROCtextwnd(TRUE): PRINT TAB(0,vpos%);
 ENDPROC
 DEF PROCreport_risk
-LOCAL vpos%
-vpos% = VPOS: PROCtextwnd(FALSE)
+LOCAL vpos: vpos=VPOS: PROCtextwnd(FALSE)
 IF V% PRINT TAB(0,1);: ELSE PRINT TAB(0,2);
 PRINT "Total risk: "; risk%
-PROCtextwnd(TRUE): PRINT TAB(0,vpos%);
+PROCtextwnd(TRUE): PRINT TAB(0,vpos);
 ENDPROC
 DEF PROCbanner
+FOR I%=1 TO 2
 VDU 141,129: PRINT "2021/09       Smoke Basin"
-VDU 141,129: PRINT "2021/09       Smoke Basin"
-PROCtextwnd(TRUE)
+NEXT: PROCtextwnd(TRUE)
 ENDPROC
 DEF PROCvis_setup
 VDU 19,2,4;0;: REM colour 2 = blue
 COLOUR 1: PRINT "2021/09 Smoke Basin"
 COLOUR 3: PROCtextwnd(TRUE)
-VDU 24, 0; 96; width% * 8 - 1; height% * 8 + 95;
-VDU 29, 0; 96;
+VDU 24,0;96; width% * 8 - 1; height% * 8 + 95;
+VDU 29,0;96;
 GCOL 0,129: CLG: GCOL 0,128
 ENDPROC
 DEF PROCtextwnd(flag)
@@ -136,4 +132,3 @@ LOCAL cmd$,cmd%: cmd$ = "EXEC "+file$
 DIM cmd% LEN(cmd$): $cmd% = cmd$
 X% = cmd% MOD &100: Y% = cmd% DIV &100: CALL &FFF7
 Y%=&FF: X%=0: A%=&C6: =(USR(&FFF4) AND &FF00) DIV &100
-ENDPROC

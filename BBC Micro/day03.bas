@@ -5,7 +5,7 @@ IF file$ <> "" THEN exec = FNexec(file$) ELSE exec = 0
 DIM num%(1000), cpy%(1000), freq%(31)
 n=0: len=0
 REPEAT
-PRINT n+1;:INPUT "> " line$
+PRINT n+1;: INPUT "> " line$
 IF line$ <> "" PROCstore
 UNTIL FNend_input
 IF n=0 END
@@ -30,8 +30,7 @@ PROCtextwnd(TRUE): PRINT TAB(0,vpos);
 END
 DEF FNend_input: IF exec THEN =EOF#exec ELSE =(line$ = "")
 DEF PROCstore
-V%=0
-n=n+1
+V%=0: n=n+1
 IF len=0 THEN len = LEN(line$)
 FOR I% = 1 TO len
 V%=V%*2
@@ -59,9 +58,9 @@ cand2% = cand2% + 1: cpy%(cand2%) = cpy%(I%)
 IF (cpy%(I%) AND npow%) THEN c1=c1+1
 ENDPROC
 DEF PROCbanner
+FOR I%=1 TO 2
 VDU 135,157,129,141: PRINT "2021/03    Binary Diagnostic"
-VDU 135,157,129,141: PRINT "2021/03    Binary Diagnostic"
-PROCtextwnd(TRUE)
+NEXT: PROCtextwnd(TRUE)
 ENDPROC
 DEF FNexec(file$)
 LOCAL cmd$,cmd%: cmd$ = "EXEC "+file$ 
